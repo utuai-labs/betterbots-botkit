@@ -1,0 +1,42 @@
+{
+  "author": "betterbots@utu.ai",
+  "name": "uTu-Botkit-Demo",
+  "version": "0.0.1",
+  "dependencies": {
+    "alexa-botkit": "^0.0.3",
+    "alexa-req": "^1.0.0",
+    "alexa-response": "^4.0.3",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-runtime": "^6.18.0",
+    "botkit": "^0.4.2",
+    "cross-env": "^3.1.3",
+    "dotenv": "^2.0.0",
+    "localtunnel": "^1.8.0",
+    "node-fetch": "^1.6.3",
+    "utu": "0.0.1",
+    "webpack": "^1.13.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.8",
+    "babel-watch": "^2.0.3",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^3.1.2",
+    "webpack": "^1.13.3"
+  },
+  "babel": {
+    "presets": [
+      "stage-0",
+      "es2015"
+    ]
+  },
+  "scripts": {
+    "build": "babel -w --presets es2015 src -d dist",
+    "start": "cross-env $(cat .env) nodemon lesson-1-anatomy/src/index.js --watch src --exec babel-node"
+  },
+  "license": "MIT"
+}
