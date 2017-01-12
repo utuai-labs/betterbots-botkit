@@ -18,7 +18,7 @@ ears.setupWebserver(3000, (err, webserver) => {
           console.log(err);
           process.exit();
       }
-      console.log(`Your bot is listening for Alexa requests on the following URL: ${tunnel.url}/alexa/receive`);
+      console.log(`Your bot is listening for Alexa requests on the following URL: ${tunnel.url}/alexa/receive/`);
   });
 
   tunnel.on('close', function() {

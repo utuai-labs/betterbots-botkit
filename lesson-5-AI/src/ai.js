@@ -3,6 +3,7 @@ import ear from './listener';
 import { SYSTEM, BOARDS, CLIPS } from './nlp';
 
 ear.on(SYSTEM.LAUNCH.intents, function(bot, message) {
+  console.log("on");
   bot.reply(message,
     response
       .say(SYSTEM.LAUNCH.responses.greeting)
@@ -12,6 +13,7 @@ ear.on(SYSTEM.LAUNCH.intents, function(bot, message) {
 });
 
 ear.hears(SYSTEM.START.intents, function(bot, message) {
+  console.log("start");
   bot.reply(message,
     response
       .say(SYSTEM.START.responses.greeting)
@@ -21,6 +23,7 @@ ear.hears(SYSTEM.START.intents, function(bot, message) {
 });
 
 ear.hears(BOARDS.TOP_BOARDS.intents, function(bot, message) {
+  console.log("top boards");
   bot.reply(message,
     response
       .say("you asked for all top boards")
@@ -54,6 +57,7 @@ ear.hears(CLIPS.CLIP_CATEGORIES.intents, function(bot, message) {
 });
 
 ear.hears(SYSTEM.HELP.intents, ['message_received'], (bot, message) => {
+  console.log("help");
   bot.reply(message,
     response
       .say(SYSTEM.HELP.responses.intro)
@@ -63,6 +67,7 @@ ear.hears(SYSTEM.HELP.intents, ['message_received'], (bot, message) => {
 });
 
 ear.hears(SYSTEM.STOP.intents, ['message_received'], (bot, message) => {
+  console.log("stop");
   bot.reply(message,
     response
       .say(SYSTEM.STOP.responses.goodbye)
