@@ -1,4 +1,4 @@
-import getUtterances from 'alexa-utterances';
+// import getUtterances from 'alexa-utterances';
 
 export const BOARDS = {
   TOP_BOARDS: {

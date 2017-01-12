@@ -1,13 +1,13 @@
 import response from 'alexa-response';
 import ear from './listener';
-import SYSTEM, BOARDS, CLIPS from './nlp';
+import { SYSTEM, BOARDS, CLIPS } from './nlp';
 
 ear.on(SYSTEM.LAUNCH.intents, function(bot, message) {
   bot.reply(message,
     response
       .say(SYSTEM.LAUNCH.responses.greeting)
       .reprompt(SYSTEM.HELP.responses.help)
-      .shouldEndSession(false);
+      .shouldEndSession(false)
   );
 });
 
@@ -16,7 +16,7 @@ ear.hears(SYSTEM.START.intents, function(bot, message) {
     response
       .say(SYSTEM.START.responses.greeting)
       .reprompt(SYSTEM.HELP.responses.help)
-      .shouldEndSession(false);
+      .shouldEndSession(false)
   );
 });
 
@@ -24,7 +24,7 @@ ear.hears(BOARDS.TOP_BOARDS.intents, function(bot, message) {
   bot.reply(message,
     response
       .say("you asked for all top boards")
-      .shouldEndSession(false);
+      .shouldEndSession(false)
   );
 });
 
@@ -32,7 +32,7 @@ ear.hears(CLIPS.LIST_CATEGORIES.intents, function(bot, message) {
   bot.reply(message,
     response
       .say(CLIPS.slotTypes.CATEGORIES.toString())
-      .shouldEndSession(false);
+      .shouldEndSession(false)
   );
 });
 
@@ -42,13 +42,13 @@ ear.hears(CLIPS.CLIP_CATEGORIES.intents, function(bot, message) {
     bot.reply(message,
       response
         .say("Heard you want clips for the " + category + "category.")
-        .shouldEndSession(false);
+        .shouldEndSession(false)
     );
   } else {
     bot.reply(message,
       response
         .ask("Sorry, I didn't catach a category.  Can you repeat it please?")
-        .shouldEndSession(false);
+        .shouldEndSession(false)
     );
   }
 });

@@ -1,6 +1,4 @@
-import getUtterances from 'alexa-utterances';
-
-const BOARDS = {
+export const BOARDS = {
   intents: {
     TOP_BOARDS: {
       intent: ['GetTopBoards'],
@@ -12,7 +10,7 @@ const BOARDS = {
   },
 };
 
-const CLIPS = {
+export const CLIPS = {
   intents: {
     LIST_CATEGORIES: {
       intent: ['GetCategoryList'],
@@ -40,7 +38,7 @@ const CLIPS = {
   },
 }
 
-const SYSTEM = {
+export const SYSTEM = {
   intents: {
     START: {
       intent: ['LaunchRequest', 'AMAZON.StartOverIntent'],

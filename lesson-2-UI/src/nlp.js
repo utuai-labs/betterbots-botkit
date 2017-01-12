@@ -1,11 +1,11 @@
-const BOARDS = {
+export const BOARDS = {
   intents: {
     TOP_BOARDS: {
     },
   },
 };
 
-const CLIPS = {
+export const CLIPS = {
   intents: {
     LIST_CATEGORIES: {
     },
@@ -14,7 +14,7 @@ const CLIPS = {
   },
 }
 
-const SYSTEM = {
+export const SYSTEM = {
   intents: {
     START: {
     },
@@ -24,5 +24,3 @@ const SYSTEM = {
     },
   },
 }
-
-export default SYSTEM, BOARDS, CLIPS;
