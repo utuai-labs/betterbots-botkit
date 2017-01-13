@@ -15,7 +15,7 @@
     "dotenv": "^2.0.0",
     "localtunnel": "^1.8.0",
     "node-fetch": "^1.6.3",
-    "utu": "0.0.1",
+    "utu": "^0.1.0",
     "webpack": "^1.13.3"
   },
   "devDependencies": {

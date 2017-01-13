@@ -1,7 +1,9 @@
 import Botkit from 'botkit';
-import { Client, constants } from 'utu';
+import { uTu, constants } from 'utu';
 
-const uTu = new Client(process.env.UTU_KEY);
+const client = new uTu(process.env.UTU_KEY, {
+  platform: constants.SLACK,
+});
 
 if (!process.env.TOKEN) {
   console.log('Error: Specify token in environment');
@@ -23,8 +25,7 @@ controller.spawn({
 controller.middleware.receive.use((bot, message, next) => {
   if (message.type === 'message') {
     // log the incoming message
-    uTu.message({
-      platform: constants.SLACK,
+    client.message({
       platformId: message.user,
       values: {
         message: message.text,
@@ -37,8 +38,7 @@ controller.middleware.receive.use((bot, message, next) => {
     // find the users information
     bot.api.users.info({ user: message.user }, (err, info) => {
       // log the users information
-      uTu.user({
-        platform: constants.SLACK,
+      client.user({
         platformId: message.user,
         values: {
           email: info.user.profile.email,
@@ -56,8 +56,7 @@ controller.middleware.receive.use((bot, message, next) => {
 controller.hears(['hello', 'hi'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   const reply = 'Hello.';
   bot.reply(message, reply);
-  uTu.message({
-    platform: constants.SLACK,
+  client.message({
     platformId: message.user,
     values: {
       message: message.text,
@@ -103,8 +102,7 @@ controller.hears(['attach'], ['direct_message', 'direct_mention'], (bot, message
 
   bot.reply(message, msg);
 
-  uTu.message({
-    platform: constants.SLACK,
+  client.message({
     platformId: message.user,
     values: {
       message: msg.text,

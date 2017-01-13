@@ -4,6 +4,7 @@ import { getTopBoards, getProductsByCategory } from './service';
 import { SYSTEM, BOARDS, CLIPS } from './nlp';
 
 ear.on('message_received', function(bot, message) {
+  // console.log("message: ", message.utu);
   message.utu.message({
     values: {
       message: message.alexa.getIntentName(),
@@ -44,13 +45,13 @@ ear.hears(BOARDS.TOP_BOARDS.intents, ['message_received'], function(bot, message
           .shouldEndSession(false)
       );
     });
-  message.utu.event("Top Boards");
+    message.utu.event("Top Boards");
 });
 
 ear.hears(CLIPS.LIST_CATEGORIES.intents, ['message_received'], function(bot, message) {
   bot.reply(message,
     response
-      .say('Categories are as follows: ', CLIPS.slotTypes.CATEGORIES.toString())
+      .say(`Categories are as follows ${CLIPS.slotTypes.CATEGORIES.toString()}`)
       .shouldEndSession(false)
   );
   message.utu.event("Clip Categories");
@@ -59,19 +60,29 @@ ear.hears(CLIPS.LIST_CATEGORIES.intents, ['message_received'], function(bot, mes
 ear.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bot, message) {
   const category = message.alexa.getSlotValue('CATEGORY');
   if (category) {
-    getProductsByCategory(category)
-      .then((res) => {
-        bot.reply(message,
-          response
-            .say("Heard you want clips for the " + category + " category. " + res.url)
-            .shouldEndSession(false)
-        );
+    if (CLIPS.slotTypes.CATEGORIES.indexOf(category) > 0) {
+      getProductsByCategory(category)
+        .then((res) => {
+          bot.reply(message,
+            response
+              .say("Heard you want clips for the " + category + " category. " + res.url)
+              .shouldEndSession(false)
+          );
+        });
+      message.utu.event("Clip by Category", {
+        values: {
+          "Category": category,
+        }
       });
-    message.utu.event("Clip by Category", {
-      values: {
-        "Category": category,
-      }
-    });
+    } else {
+      bot.reply(message,
+        response
+          .ask("Sorry, but " + category + " is not a category.  Please try again.")
+          .reprompt(SYSTEM.HELP.responses.help)
+          .shouldEndSession(false)
+      );
+      message.utu.event("Error - Clip Category");
+    }
   } else {
     bot.reply(message,
       response
