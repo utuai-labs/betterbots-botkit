@@ -4,26 +4,13 @@ import { getTopBoards, getProductsByCategory } from './service';
 import { SYSTEM, BOARDS, CLIPS } from './nlp';
 
 ear.on('message_received', function(bot, message) {
-  console.log("message: ", message);
-  console.log("appid: ", process.env.ALEXA_APPID);
-
-  // if (message.sessionDetails.application.applicationId !== process.env.ALEXA_APPID) {
-  //   bot.reply(message,
-  //     response
-  //       .fail(`Invalid applicationId: ${process.env.ALEXA_APPID}`)
-  //       .shouldEndSession(true)
-  //   );
-  // }
-
-  message.utu.message({
-    values: {
-      message: message.alexa.getIntentName(),
-      rawMessage: {
-       text: message.alexa.getIntentName(),
-      },
-      botMessage: false,
-    }
-  });
+  if (message.alexa.session.application.applicationId !== process.env.ALEXA_APPID) {
+    bot.reply(message,
+      response
+        .fail(`Invalid applicationId: ${message.alexa.session.application.applicationId}`)
+        .shouldEndSession(true)
+    );
+  }
 });
 
 ear.hears(SYSTEM.LAUNCH.intents, ['message_received'], function(bot, message) {
