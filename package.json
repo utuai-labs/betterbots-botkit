@@ -36,7 +36,7 @@
   },
   "scripts": {
     "build": "babel -w --presets es2015 src -d dist",
-    "start": "cross-env $(cat .env) nodemon lesson-7-Tracking/src/index.js --watch src --exec babel-node"
+    "start": "cross-env $(cat .env) nodemon lesson-9-Multi-Channel/src/index.js --watch src --exec babel-node"
   },
   "license": "MIT"
 }
