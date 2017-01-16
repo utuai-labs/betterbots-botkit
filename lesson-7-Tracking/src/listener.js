@@ -33,13 +33,36 @@ ears.setupWebserver(3000, (err, webserver) => {
   });
 });
 
+// creating a middleware that adds the utu context to each incoming request
 ears.middleware.receive.use((bot, message, next) => {
+  // instrament each message to have utu within the scope of each incoming message
   message.utu = utu.withContext(
     {
       platformId: message.user,
       sessionId: message.alexa.getSessionId(),
     }
   );
+
+  // on any message that comes through send the message to utu
+  message.utu.message({
+    values: {
+      message: message.alexa.getIntentName(),
+      rawMessage: message.alexa,
+      botMessage: false,
+    }
+  });
+  next();
+});
+
+ears.middleware.send.use(function(bot, message, next) {
+  // on any outgoing message log the message being sent back to the user
+  message.src.utu.message({
+    values: {
+      message: message.resp.state.response.outputSpeech.text,
+      rawMessage: message.resp,
+      botMessage: true,
+    }
+  });
   next();
 });
 
