@@ -19,18 +19,18 @@ export const facebookEars = facebookbot({
 });
 
 // give alexa the tools to listen and communicate to the outside world
-const earBuds = ears.spawn({});
+const alexaEarBuds = alexaEars.spawn({});
 const facebookEarBuds = facebookEars.spawn({});
 
 // start listening to your Alexa ears!
-ears.setupWebserver(process.env.PORT, (err, webserver) => {
-  ears.createWebhookEndpoints(webserver, earBuds);
+alexaEars.setupWebserver(process.env.PORT, (err, webserver) => {
+  alexaEars.createWebhookEndpoints(webserver, alexaEarBuds);
   facebookEars.createWebhookEndpoints(webserver, facebookEarBuds);
   console.log(`ONLINE! ${process.env.PORT}`);
 });
 
 // creating a middleware that adds the utu context to each incoming request
-ears.middleware.receive.use((bot, message, next) => {
+alexaEars.middleware.receive.use((bot, message, next) => {
   // instrament each message to have utu within the scope of each incoming message
   message.utu = utu.withContext(
     {
@@ -81,7 +81,7 @@ ears.middleware.receive.use((bot, message, next) => {
   next();
 });
 
-ears.middleware.send.use(function(bot, message, next) {
+alexaEars.middleware.send.use(function(bot, message, next) {
   // on any outgoing message log the message being sent back to the user
   message.src.utu.message({
     values: {
