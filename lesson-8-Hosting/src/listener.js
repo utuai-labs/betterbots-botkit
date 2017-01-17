@@ -18,19 +18,10 @@ const ears = alexa({
 const earBuds = ears.spawn({});
 
 // start listening to your Alexa ears!
-ears.setupWebserver(4261, (err, webserver) => {
-  ears.createWebhookEndpoints(webserver, earBuds);
-  // const tunnel = localtunnel(3000,  { subdomain: process.env.SUBDOMAIN, host: 'https://bot-tunnel.com' }, (err, tunnel) => {
-  //     if (err) {
-  //         console.log(err);
-  //         process.exit();
-  //     }
-  //     console.log(`Your bot is listening for Alexa requests on the following URL: ${tunnel.url}/alexa/receive/`);
-  // });
-  // tunnel.on('close', function() {
-  //     console.log('Your bot is no longer listening for Alexa requests at the localtunnnel.me URL.');
-  //     process.exit();
-  // });
+ears.setupWebserver(process.env.PORT, (err, webserver) => {
+  ears.createWebhookEndpoints(webserver, earBuds, function() {
+      console.log(`ONLINE! ${process.env.PORT}`);
+  });
 });
 
 // creating a middleware that adds the utu context to each incoming request
