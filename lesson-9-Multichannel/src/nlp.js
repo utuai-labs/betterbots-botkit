@@ -1,12 +1,14 @@
 export const BOARDS = {
   TOP_BOARDS: {
-    intents: ['GetTopBoards'],
+    intents: ['GetTopBoards', 'boards', 'show me boards', 'show boards', 'list boards'],
     slots: [],
     utterances: [
       '{-|list|show|show me} {-|top} boards',
     ],
   },
 };
+
+// 'call me (.*)', 'my name is (.*)'
 
 export const CLIPS = {
   LIST_CATEGORIES: {

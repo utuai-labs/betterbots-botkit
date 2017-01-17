@@ -13,6 +13,11 @@ alexaEars.on('message_received', function(bot, message) {
   }
 });
 
+facebookEars.hears(SYSTEM.LAUNCH.intents, ['message_received'], function(bot, message) {
+  bot.reply(message, SYSTEM.LAUNCH.responses.greeting);
+  message.utu.event("Session Launch");
+});
+
 alexaEars.hears(SYSTEM.LAUNCH.intents, ['message_received'], function(bot, message) {
   bot.reply(message,
     response
@@ -31,6 +36,14 @@ alexaEars.hears(SYSTEM.START.intents, ['message_received'], function(bot, messag
       .shouldEndSession(false)
   );
   message.utu.event("Session Start");
+});
+
+facebookEars.hears(BOARDS.TOP_BOARDS.intents, ['message_received'], function(bot, message) {
+  getTopBoards()
+    .then((url) => {
+      bot.reply(message, `you asked for all top boards ${url}`);
+    });
+    message.utu.event("Top Boards");
 });
 
 alexaEars.hears(BOARDS.TOP_BOARDS.intents, ['message_received'], function(bot, message) {
