@@ -17,6 +17,8 @@ export const facebookEars = facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN,
 });
+console.log('FB_ACCESS_TOKEN: ', process.env.FB_ACCESS_TOKEN);
+console.log('FB_VERIFY_TOKEN: ', process.env.FB_VERIFY_TOKEN);
 
 // give alexa the tools to listen and communicate to the outside world
 const alexaEarBuds = alexaEars.spawn({});
