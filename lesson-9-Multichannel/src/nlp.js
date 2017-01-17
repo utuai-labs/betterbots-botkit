@@ -65,7 +65,7 @@ export const SYSTEM = {
     }
   },
   STOP: {
-    intents: ['AMAZON.CancelIntent', 'AMAZON.StopIntent', 'quit', 'exit', 'bye', 'thanks', 'SessionEndedRequest'],
+    intents: ['AMAZON.CancelIntent', 'AMAZON.StopIntent', 'quit', 'exit', 'bye', 'thanks'],
     slots: [],
     utterances: [],
     responses: {

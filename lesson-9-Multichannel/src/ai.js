@@ -3,6 +3,16 @@ import ear from './listener';
 import { getTopBoards, getProductsByCategory } from './service';
 import { SYSTEM, BOARDS, CLIPS } from './nlp';
 
+ear.on('message_received', function(bot, message) {
+  if (message.alexa.session.application.applicationId !== process.env.ALEXA_APPID) {
+    bot.reply(message,
+      response
+        .fail(`Invalid applicationId: ${message.alexa.session.application.applicationId}`)
+        .shouldEndSession(true)
+    );
+  }
+});
+
 ear.hears(SYSTEM.LAUNCH.intents, ['message_received'], function(bot, message) {
   bot.reply(message,
     response
@@ -32,7 +42,6 @@ ear.hears(BOARDS.TOP_BOARDS.intents, ['message_received'], function(bot, message
           .shouldEndSession(false)
       );
     });
-    bot.replse(respseonse)
     message.utu.event("Top Boards");
 });
 

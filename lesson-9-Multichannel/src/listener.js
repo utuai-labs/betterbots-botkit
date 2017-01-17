@@ -10,11 +10,10 @@ const utu = new uTu(process.env.UTU_SECRET, {
 });
 
 // define ears for Alexa
-const ears = alexa({
+const export alexaEars = alexa({
   debug: true,
 });
-
-const facebookEars = facebookbot({
+const export facebookEars = facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN,
 });
@@ -24,20 +23,10 @@ const earBuds = ears.spawn({});
 const facebookEarBuds = facebookEars.spawn({});
 
 // start listening to your Alexa ears!
-ears.setupWebserver(3000, (err, webserver) => {
+ears.setupWebserver(process.env.PORT, (err, webserver) => {
   ears.createWebhookEndpoints(webserver, earBuds);
   facebookEars.createWebhookEndpoints(webserver, facebookEarBuds);
-  const tunnel = localtunnel(3000,  { subdomain: process.env.SUBDOMAIN, host: 'https://bot-tunnel.com' }, (err, tunnel) => {
-      if (err) {
-          console.log(err);
-          process.exit();
-      }
-      console.log(`Your bot is listening for Alexa requests on the following URL: ${tunnel.url}/alexa/receive/`);
-  });
-  tunnel.on('close', function() {
-      console.log('Your bot is no longer listening for Alexa requests at the localtunnnel.me URL.');
-      process.exit();
-  });
+  console.log(`ONLINE! ${process.env.PORT}`);
 });
 
 // creating a middleware that adds the utu context to each incoming request
@@ -58,6 +47,37 @@ ears.middleware.receive.use((bot, message, next) => {
       botMessage: false,
     }
   });
+
+  if (!message.response.req.headers.signaturecertchainurl) {
+    return next();
+  }
+
+  // Mark the request body as already having been parsed so it's ignored by // other body parser middlewares.
+  message.response.req._body = true;
+  message.response.req.rawBody = '';
+  message.response.req.on('data', function(data) {
+    return message.response.req.rawBody += data;
+  });
+  message.response.req.on('end', () => {
+    var cert_url, er, error, requestBody, signature;
+    try {
+      message.response.req.body = JSON.parse(message.response.req.rawBody);
+    } catch (error) {
+      er = error;
+      message.response.req.body = {};
+    }
+    cert_url = message.response.req.headers.signaturecertchainurl;
+    signature = message.response.req.headers.signature;
+    requestBody = message.response.req.rawBody;
+    verifier(cert_url, signature, requestBody, function(er) {
+      if (er) {
+        console.error('error validating the alexa cert:', er);
+        message.response.req.res.status(401).json({ status: 'failure', reason: er });
+      } else {
+        next();
+      }
+    });
+  });
   next();
 });
 
@@ -72,5 +92,3 @@ ears.middleware.send.use(function(bot, message, next) {
   });
   next();
 });
-
-export default ears;
