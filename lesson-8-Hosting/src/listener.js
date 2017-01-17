@@ -26,8 +26,22 @@ ears.setupWebserver(process.env.PORT, (err, webserver) => {
 
 // creating a middleware that adds the utu context to each incoming request
 ears.middleware.receive.use((bot, message, next) => {
-  console.log("message.response.res - middleware: ", message.response.res);
-  console.log("message.response.req.headers - res: ", message.response.req.res);
+  // instrament each message to have utu within the scope of each incoming message
+  message.utu = utu.withContext(
+    {
+      platformId: message.user,
+      sessionId: message.alexa.getSessionId(),
+    }
+  );
+
+  // on any message that comes through send the message to utu
+  message.utu.message({
+    values: {
+      message: message.alexa.getIntentName(),
+      rawMessage: message.alexa,
+      botMessage: false,
+    }
+  });
 
   if (!message.response.req.headers.signaturecertchainurl) {
     return next();
@@ -53,28 +67,11 @@ ears.middleware.receive.use((bot, message, next) => {
     verifier(cert_url, signature, requestBody, function(er) {
       if (er) {
         console.error('error validating the alexa cert:', er);
-        // res.status(401).json({ status: 'failure', reason: er });
+        message.response.req.res.status(401).json({ status: 'failure', reason: er });
       } else {
         next();
       }
     });
-  });
-
-  // instrament each message to have utu within the scope of each incoming message
-  message.utu = utu.withContext(
-    {
-      platformId: message.user,
-      sessionId: message.alexa.getSessionId(),
-    }
-  );
-
-  // on any message that comes through send the message to utu
-  message.utu.message({
-    values: {
-      message: message.alexa.getIntentName(),
-      rawMessage: message.alexa,
-      botMessage: false,
-    }
   });
   next();
 });
