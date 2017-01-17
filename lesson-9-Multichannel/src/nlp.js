@@ -8,8 +8,6 @@ export const BOARDS = {
   },
 };
 
-// 'call me (.*)', 'my name is (.*)'
-
 export const CLIPS = {
   LIST_CATEGORIES: {
     intents: ['GetCategoryList'],
