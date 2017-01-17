@@ -33,7 +33,8 @@ alexaEars.setupWebserver(process.env.PORT, (err, webserver) => {
 
 facebookEars.middleware.receive.use((bot, message, next) => {
   // instrament each message to have utu within the scope of each incoming message
-  console.log("message: ", message);
+  console.log("message receive: ", message);
+  console.log("message receive: ", message.text);
   message.utu = utu.withContext(
     {
       platformId: message.user,
@@ -45,8 +46,8 @@ facebookEars.middleware.receive.use((bot, message, next) => {
   // on any message that comes through send the message to utu
   message.utu.message({
     values: {
-      message: message.text,
-      rawMessage: message.text,
+      message: 'message',
+      rawMessage: 'message',
       botMessage: false,
     }
   });
@@ -120,11 +121,11 @@ alexaEars.middleware.send.use(function(bot, message, next) {
 
 facebookEars.middleware.send.use(function(bot, message, next) {
   // on any outgoing message log the message being sent back to the user
-  console.log("send middle: ", message);
+  console.log("send middle: ", message.text);
   message.src.utu.message({
     values: {
-      message: message.text,
-      rawMessage: message.text,
+      message: 'message from FB messenger',
+      rawMessage: 'message from FB messenger',
       botMessage: true,
     }
   });
