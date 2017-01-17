@@ -26,16 +26,17 @@ ears.setupWebserver(process.env.PORT, (err, webserver) => {
 
 // creating a middleware that adds the utu context to each incoming request
 ears.middleware.receive.use((bot, message, next) => {
-  console.log("message - middleware: ", message);
+  console.log("message.response.req - middleware: ", message.response.req);
+  console.log("message.response.req.headers - middleware: ", message.response.req.headers);
 
-  // if (!req.headers.signaturecertchainurl) {
+  // if (!message.response.req.headers.signaturecertchainurl) {
   //   return next();
   // }
 
   // Mark the request body as already having been parsed so it's ignored by // other body parser middlewares.
-  // message._body = true;
-  // message.rawBody = '';
-  // message.on('data', function(data) { return req.rawBody += data; });
+  // req._body = true;
+  // req.rawBody = '';
+  // req.on('data', function(data) { return req.rawBody += data; });
   // req.on('end', function() {
   //   var cert_url, er, error, requestBody, signature;
   //   try {
