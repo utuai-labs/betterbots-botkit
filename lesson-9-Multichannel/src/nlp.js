@@ -10,14 +10,14 @@ export const BOARDS = {
 
 export const CLIPS = {
   LIST_CATEGORIES: {
-    intents: ['GetCategoryList'],
+    intents: ['GetCategoryList', 'categories', 'list categories', 'show categories', 'show me categories'],
     slots: [],
     utterances: [
       '{-|list|what|show me} {-|are} {-|the} categories',
     ],
   },
   CLIP_CATEGORIES: {
-    intents: ['GetCategoryClips'],
+    intents: ['GetCategoryClips', 'list (.*)', 'show (.*)', 'show me (.*)', 'show products for (.*)'],
     slots: {
       CATEGORY: 'CATEGORIES',
     },
@@ -57,7 +57,7 @@ export const SYSTEM = {
     }
   },
   START: {
-    intents: ['AMAZON.StartOverIntent'],
+    intents: ['AMAZON.StartOverIntent', 'Hello'],
     slots: [],
     utterances: [],
     responses: {

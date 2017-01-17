@@ -29,6 +29,11 @@ alexaEars.hears(SYSTEM.LAUNCH.intents, ['message_received'], function(bot, messa
 });
 
 alexaEars.hears(SYSTEM.START.intents, ['message_received'], function(bot, message) {
+  bot.reply(message, SYSTEM.START.responses.greeting);
+  message.utu.event("Session Start");
+});
+
+alexaEars.hears(SYSTEM.START.intents, ['message_received'], function(bot, message) {
   bot.reply(message,
     response
       .say(SYSTEM.START.responses.greeting)
@@ -58,6 +63,11 @@ alexaEars.hears(BOARDS.TOP_BOARDS.intents, ['message_received'], function(bot, m
     message.utu.event("Top Boards");
 });
 
+facebookEars.hears(CLIPS.LIST_CATEGORIES.intents, ['message_received'], function(bot, message) {
+  bot.reply(message, `Categories are as follows ${CLIPS.slotTypes.CATEGORIES.toString()}`);
+  message.utu.event("Clip Categories");
+});
+
 alexaEars.hears(CLIPS.LIST_CATEGORIES.intents, ['message_received'], function(bot, message) {
   bot.reply(message,
     response
@@ -66,6 +76,29 @@ alexaEars.hears(CLIPS.LIST_CATEGORIES.intents, ['message_received'], function(bo
       .shouldEndSession(false)
   );
   message.utu.event("Clip Categories");
+});
+
+facebookEars.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bot, message) {
+  const category = message.match[1];
+  if (category) {
+    if (CLIPS.slotTypes.CATEGORIES.indexOf(category) > 0) {
+      getProductsByCategory(category)
+        .then((res) => {
+          bot.reply(message, `Heard you want clips for the ${category}. ${res.url}`);
+        });
+      message.utu.event("Clip by Category", {
+        values: {
+          "Category": category,
+        }
+      });
+    } else {
+      bot.reply(message, `Sorry, but ${category} is not a category.  Please try again.`);
+      message.utu.event("Error - Clip Category");
+    }
+  } else {
+    bot.reply(message, "Sorry, I didn't catach a category.  Can you repeat it please?");
+    message.utu.event("Error - Clip Category");
+  }
 });
 
 alexaEars.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bot, message) {
@@ -104,6 +137,11 @@ alexaEars.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bo
   }
 });
 
+facebookEars.hears(SYSTEM.HELP.intents, ['message_received'], (bot, message) => {
+  bot.reply(message, SYSTEM.HELP.responses.intro);
+  message.utu.event("Help");
+});
+
 alexaEars.hears(SYSTEM.HELP.intents, ['message_received'], (bot, message) => {
   bot.reply(message,
     response
@@ -112,6 +150,11 @@ alexaEars.hears(SYSTEM.HELP.intents, ['message_received'], (bot, message) => {
       .shouldEndSession(false)
   );
   message.utu.event("Help");
+});
+
+facebookEars.hears(SYSTEM.STOP.intents, ['message_received'], (bot, message) => {
+  bot.reply(message, SYSTEM.STOP.responses.goodbye);
+  message.utu.event("Goodbye");
 });
 
 alexaEars.hears(SYSTEM.STOP.intents, ['message_received'], (bot, message) => {

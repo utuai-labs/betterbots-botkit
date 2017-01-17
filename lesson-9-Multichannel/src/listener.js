@@ -31,6 +31,29 @@ alexaEars.setupWebserver(process.env.PORT, (err, webserver) => {
   console.log(`ONLINE! ${process.env.PORT}`);
 });
 
+facebookEars.middleware.receive.use((bot, message, next) => {
+  // instrament each message to have utu within the scope of each incoming message
+  console.log("message: ", message);
+  message.utu = utu.withContext(
+    {
+      platformId: message.user,
+      // sessionId: message.alexa.getSessionId(),
+      sessionId: '1234',
+    }
+  );
+
+  // on any message that comes through send the message to utu
+  // message.utu.message({
+  //   values: {
+  //     message: message.alexa.getIntentName(),
+  //     rawMessage: message.alexa,
+  //     botMessage: false,
+  //   }
+  // });
+
+  next();
+});
+
 // creating a middleware that adds the utu context to each incoming request
 alexaEars.middleware.receive.use((bot, message, next) => {
   // instrament each message to have utu within the scope of each incoming message
@@ -85,6 +108,19 @@ alexaEars.middleware.receive.use((bot, message, next) => {
 
 alexaEars.middleware.send.use(function(bot, message, next) {
   // on any outgoing message log the message being sent back to the user
+  message.src.utu.message({
+    values: {
+      message: message.resp.state.response.outputSpeech.text,
+      rawMessage: message.resp,
+      botMessage: true,
+    }
+  });
+  next();
+});
+
+facebookEars.middleware.send.use(function(bot, message, next) {
+  // on any outgoing message log the message being sent back to the user
+  console.log("send middle: ", message);
   message.src.utu.message({
     values: {
       message: message.resp.state.response.outputSpeech.text,
