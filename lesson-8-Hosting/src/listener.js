@@ -26,8 +26,8 @@ ears.setupWebserver(process.env.PORT, (err, webserver) => {
 
 // creating a middleware that adds the utu context to each incoming request
 ears.middleware.receive.use((bot, message, next) => {
-  console.log("message.response.req - middleware: ", message.response.req);
-  console.log("message.response.req.headers - middleware: ", message.response.req.headers);
+  console.log("message.response.res - middleware: ", message.response.res);
+  console.log("message.response.req.headers - res: ", message.response.req.res);
 
   if (!message.response.req.headers.signaturecertchainurl) {
     return next();
