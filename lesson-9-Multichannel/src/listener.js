@@ -121,8 +121,9 @@ alexaEars.middleware.send.use(function(bot, message, next) {
 
 facebookEars.middleware.send.use(function(bot, message, next) {
   // on any outgoing message log the message being sent back to the user
-  console.log("send middle: ", message.text);
-  message.src.utu.message({
+  console.log("send middle: ", message);
+  console.log("send middle text: ", message.text);
+  message.utu.message({
     values: {
       message: 'message from FB messenger',
       rawMessage: 'message from FB messenger',
