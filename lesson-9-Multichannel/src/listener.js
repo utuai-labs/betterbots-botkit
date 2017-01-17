@@ -37,19 +37,19 @@ facebookEars.middleware.receive.use((bot, message, next) => {
   message.utu = utu.withContext(
     {
       platformId: message.user,
-      // sessionId: message.alexa.getSessionId(),
+      sessionId: message.channel,
       sessionId: '1234',
     }
   );
 
   // on any message that comes through send the message to utu
-  // message.utu.message({
-  //   values: {
-  //     message: message.alexa.getIntentName(),
-  //     rawMessage: message.alexa,
-  //     botMessage: false,
-  //   }
-  // });
+  message.utu.message({
+    values: {
+      message: message.text,
+      rawMessage: message.text,
+      botMessage: false,
+    }
+  });
 
   next();
 });
@@ -123,8 +123,8 @@ facebookEars.middleware.send.use(function(bot, message, next) {
   console.log("send middle: ", message);
   message.src.utu.message({
     values: {
-      message: message.resp.state.response.outputSpeech.text,
-      rawMessage: message.resp,
+      message: message.text,
+      rawMessage: message.text,
       botMessage: true,
     }
   });
