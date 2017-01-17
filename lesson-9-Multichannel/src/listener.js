@@ -47,13 +47,13 @@ facebookEars.middleware.receive.use((bot, message, next) => {
   console.log("message receive post: ", message);
 
   // on any message that comes through send the message to utu
-  message.utu.message({
-    values: {
-      message: 'message',
-      rawMessage: 'message',
-      botMessage: false,
-    }
-  });
+  // message.utu.message({
+  //   values: {
+  //     message: 'message',
+  //     rawMessage: 'message',
+  //     botMessage: false,
+  //   }
+  // });
   next();
 });
 
@@ -109,26 +109,27 @@ alexaEars.middleware.receive.use((bot, message, next) => {
   next();
 });
 
+facebookEars.middleware.send.use(function(bot, message, next) {
+  // on any outgoing message log the message being sent back to the user
+  console.log("send bot: ", bot);
+  console.log("send middle: ", message);
+  console.log("send middle text: ", message.text);
+  // message.utu.message({
+  //   values: {
+  //     message: 'message from FB messenger',
+  //     rawMessage: 'message from FB messenger',
+  //     botMessage: true,
+  //   }
+  // });
+  next();
+});
+
 alexaEars.middleware.send.use(function(bot, message, next) {
   // on any outgoing message log the message being sent back to the user
   message.src.utu.message({
     values: {
       message: message.resp.state.response.outputSpeech.text,
       rawMessage: message.resp,
-      botMessage: true,
-    }
-  });
-  next();
-});
-
-facebookEars.middleware.send.use(function(bot, message, next) {
-  // on any outgoing message log the message being sent back to the user
-  console.log("send middle: ", message);
-  console.log("send middle text: ", message.text);
-  message.utu.message({
-    values: {
-      message: 'message from FB messenger',
-      rawMessage: 'message from FB messenger',
       botMessage: true,
     }
   });
