@@ -1,4 +1,4 @@
-import Botkit from 'botkit';
+import Botkit, { facebookbot } from 'botkit';
 import alexa from 'alexa-botkit';
 import localtunnel from 'localtunnel';
 import { uTu, constants } from 'utu';
@@ -14,12 +14,19 @@ const ears = alexa({
   debug: true,
 });
 
+const facebookEars = facebookbot({
+  access_token: process.env.FB_ACCESS_TOKEN,
+  verify_token: process.env.FB_VERIFY_TOKEN,
+});
+
 // give alexa the tools to listen and communicate to the outside world
 const earBuds = ears.spawn({});
+const facebookEarBuds = facebookEars.spawn({});
 
 // start listening to your Alexa ears!
 ears.setupWebserver(3000, (err, webserver) => {
   ears.createWebhookEndpoints(webserver, earBuds);
+  facebookEars.createWebhookEndpoints(webserver, facebookEarBuds);
   const tunnel = localtunnel(3000,  { subdomain: process.env.SUBDOMAIN, host: 'https://bot-tunnel.com' }, (err, tunnel) => {
       if (err) {
           console.log(err);
