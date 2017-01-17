@@ -35,13 +35,10 @@ alexaEars.setupWebserver(process.env.PORT, (err, webserver) => {
 
 facebookEars.middleware.receive.use((bot, message, next) => {
   // instrament each message to have utu within the scope of each incoming message
-  // console.log("message receive: ", message);
-  // console.log("message receive: ", message.text);
   message.utu = FButu.withContext(
     {
       platformId: message.user,
       sessionId: message.channel,
-      sessionId: '1234',
     }
   );
   console.log("message receive post: ", message);
@@ -49,9 +46,9 @@ facebookEars.middleware.receive.use((bot, message, next) => {
   // on any message that comes through send the message to utu
   message.utu.message({
     values: {
-      message: 'message',
+      message: message.text,
       rawMessage: {
-        text: 'message',
+        text: message.text,
       },
       botMessage: false,
     }
