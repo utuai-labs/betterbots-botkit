@@ -8,8 +8,12 @@ const utu = new uTu(process.env.UTU_SECRET, {
   platform: constants.ALEXA,
   appId: process.env.ALEXA_APPID,
 });
+const FButu = new uTu(process.env.UTU_SECRET, {
+  platform: constants.MESSENGER,
+  appId: process.env.ALEXA_APPID,
+});
 
-// define ears for Alexa
+// define ears...
 export const alexaEars = alexa({
   debug: true,
 });
@@ -17,10 +21,8 @@ export const facebookEars = facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN,
 });
-console.log('FB_ACCESS_TOKEN: ', process.env.FB_ACCESS_TOKEN);
-console.log('FB_VERIFY_TOKEN: ', process.env.FB_VERIFY_TOKEN);
 
-// give alexa the tools to listen and communicate to the outside world
+// give tools to listen and communicate to the outside world
 const alexaEarBuds = alexaEars.spawn({});
 const facebookEarBuds = facebookEars.spawn({});
 
@@ -35,13 +37,14 @@ facebookEars.middleware.receive.use((bot, message, next) => {
   // instrament each message to have utu within the scope of each incoming message
   console.log("message receive: ", message);
   console.log("message receive: ", message.text);
-  message.utu = utu.withContext(
+  message.utu = FButu.withContext(
     {
       platformId: message.user,
       sessionId: message.channel,
       sessionId: '1234',
     }
   );
+  console.log("message receive post: ", message);
 
   // on any message that comes through send the message to utu
   message.utu.message({
@@ -51,7 +54,6 @@ facebookEars.middleware.receive.use((bot, message, next) => {
       botMessage: false,
     }
   });
-
   next();
 });
 
