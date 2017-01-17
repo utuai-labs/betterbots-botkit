@@ -18,7 +18,7 @@ const ears = alexa({
 const earBuds = ears.spawn({});
 
 // start listening to your Alexa ears!
-ears.setupWebserver(3000, (err, webserver) => {
+ears.setupWebserver(4261, (err, webserver) => {
   ears.createWebhookEndpoints(webserver, earBuds);
   // const tunnel = localtunnel(3000,  { subdomain: process.env.SUBDOMAIN, host: 'https://bot-tunnel.com' }, (err, tunnel) => {
   //     if (err) {
