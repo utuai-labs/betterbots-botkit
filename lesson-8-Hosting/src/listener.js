@@ -19,13 +19,44 @@ const earBuds = ears.spawn({});
 
 // start listening to your Alexa ears!
 ears.setupWebserver(process.env.PORT, (err, webserver) => {
-  ears.createWebhookEndpoints(webserver, earBuds, function() {
+  ears.createWebhookEndpoints(webserver, earBuds, () => {
       console.log(`ONLINE! ${process.env.PORT}`);
   });
 });
 
 // creating a middleware that adds the utu context to each incoming request
 ears.middleware.receive.use((bot, message, next) => {
+  console.log("message - middleware: ", message);
+
+  // if (!req.headers.signaturecertchainurl) {
+  //   return next();
+  // }
+
+  // Mark the request body as already having been parsed so it's ignored by // other body parser middlewares.
+  // message._body = true;
+  // message.rawBody = '';
+  // message.on('data', function(data) { return req.rawBody += data; });
+  // req.on('end', function() {
+  //   var cert_url, er, error, requestBody, signature;
+  //   try {
+  //     req.body = JSON.parse(req.rawBody);
+  //   } catch (error) {
+  //     er = error;
+  //      req.body = {};
+  //   }
+  //   cert_url = req.headers.signaturecertchainurl;
+  //   signature = req.headers.signature;
+  //   requestBody = req.rawBody;
+  //   verifier(cert_url, signature, requestBody, function(er) {
+  //     if (er) {
+  //       console.error('error validating the alexa cert:', er);
+  //       res.status(401).json({ status: 'failure', reason: er });
+  //     } else {
+  //       next();
+  //     }
+  //   });
+  // });
+
   // instrament each message to have utu within the scope of each incoming message
   message.utu = utu.withContext(
     {

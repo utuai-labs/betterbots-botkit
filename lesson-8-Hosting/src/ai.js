@@ -38,7 +38,7 @@ ear.hears(BOARDS.TOP_BOARDS.intents, ['message_received'], function(bot, message
     .then((url) => {
       bot.reply(message,
         response
-          .say("you asked for all top boards " + url)
+          .say(`you asked for all top boards ${url}`)
           .shouldEndSession(false)
       );
     });
@@ -49,6 +49,7 @@ ear.hears(CLIPS.LIST_CATEGORIES.intents, ['message_received'], function(bot, mes
   bot.reply(message,
     response
       .say(`Categories are as follows ${CLIPS.slotTypes.CATEGORIES.toString()}`)
+      .reprompt('Please say, show then a category name for example show gifts')
       .shouldEndSession(false)
   );
   message.utu.event("Clip Categories");
@@ -62,7 +63,7 @@ ear.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bot, mes
         .then((res) => {
           bot.reply(message,
             response
-              .say("Heard you want clips for the " + category + " category. " + res.url)
+              .say(`Heard you want clips for the ${category}. ${res.url}`)
               .shouldEndSession(false)
           );
         });
@@ -74,7 +75,7 @@ ear.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bot, mes
     } else {
       bot.reply(message,
         response
-          .ask("Sorry, but " + category + " is not a category.  Please try again.")
+          .ask(`Sorry, but ${category} is not a category.  Please try again.`)
           .reprompt(SYSTEM.HELP.responses.help)
           .shouldEndSession(false)
       );
