@@ -10,10 +10,10 @@ const utu = new uTu(process.env.UTU_SECRET, {
 });
 
 // define ears for Alexa
-const export alexaEars = alexa({
+export const alexaEars = alexa({
   debug: true,
 });
-const export facebookEars = facebookbot({
+export const facebookEars = facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN,
 });
