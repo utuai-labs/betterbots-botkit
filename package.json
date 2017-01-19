@@ -1,6 +1,7 @@
 {
   "author": "betterbots@utu.ai",
   "name": "uTu-Botkit-Demo",
+  "private": true,
   "version": "0.1.0",
   "dependencies": {
     "alexa-botkit": "^0.0.3",
