@@ -17,6 +17,7 @@ const FButu = new uTu(process.env.UTU_SECRET, {
 export const alexaEars = alexa({
   debug: true,
 });
+console.log("process.env: ", process.env);
 export const facebookEars = facebookbot({
   access_token: process.env.FB_ACC,
   verify_token: process.env.FB_VER,

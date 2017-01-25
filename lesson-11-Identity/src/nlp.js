@@ -36,12 +36,12 @@ export const CLIPS = {
 
 export const IDENTITY = {
   LOGIN: {
-    intents: ['Login (.*)'],
+    intents: ['Login', 'Login (.*)'],
     slots: {
       EMAIL: "string",
     },
     utterances: [
-      '{login} {-|EMAIL}',
+      'login {-|EMAIL}',
     ],
     responses: {
       update: `We've added that email address to your account.`,
