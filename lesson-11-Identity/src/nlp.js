@@ -36,7 +36,7 @@ export const CLIPS = {
 
 export const IDENTITY = {
   LOGIN: {
-    intents: ['Login (.*)'],
+    intents: ['LoginIntent', 'login (.*)', 'login with (.*)'],
     slots: {
       EMAIL: "string",
     },
