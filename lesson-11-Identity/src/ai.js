@@ -153,6 +153,30 @@ facebookEars.hears(IDENTITY.LOGIN.intents, ['message_received'], (bot, message) 
   }
 });
 
+alexaEars.hears(IDENTITY.LOGIN.intents, ['message_received'], function(bot, message) {
+  const email = message.alexa.getSlotValue('EMAIL');
+  if (email) {
+    bot.reply(message,
+      response
+        .say(IDENTITY.LOGIN.responses.update)
+        .shouldEndSession(false)
+    );
+    message.utu.event("Login");
+    message.utu.user({
+      values: {
+        email: email,
+      }
+    });
+  } else {
+    bot.reply(message,
+      response
+        .ask("Sorry, I didn't catach an email.  Can you repeat it please?")
+        .shouldEndSession(false)
+    );
+    message.utu.event("Error - Login");
+  }
+});
+
 facebookEars.hears(SYSTEM.HELP.intents, ['message_received'], (bot, message) => {
   bot.reply(message, SYSTEM.HELP.responses.intro);
   message.utu.event("Help");
