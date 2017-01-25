@@ -138,18 +138,20 @@ alexaEars.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bo
 });
 
 facebookEars.hears(IDENTITY.LOGIN.intents, ['message_received'], (bot, message) => {
+  console.log("message: ", message.match);
   const email = message.match[1];
+  console.log("email: ", email);
   if (email) {
-    bot.reply(message, IDENTITY.LOGIN.responses.update);
     message.utu.event("Login");
+    bot.reply(message, IDENTITY.LOGIN.responses.update);
     message.utu.user({
       values: {
         email: email,
       }
     });
   } else {
-    bot.reply(message, "Sorry, I didn't catach an email.  Can you repeat it please?");
     message.utu.event("Error - Login");
+    bot.reply(message, "Sorry, I didn't catach an email.  Can you repeat it please?");
   }
 });
 
