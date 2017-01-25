@@ -1,7 +1,7 @@
 import response from 'alexa-response';
 import { alexaEars, facebookEars } from './listener';
 import { getTopBoards, getProductsByCategory } from './service';
-import { SYSTEM, BOARDS, CLIPS } from './nlp';
+import { SYSTEM, BOARDS, CLIPS, IDENTITY } from './nlp';
 
 alexaEars.on('message_received', function(bot, message) {
   if (message.alexa.session.application.applicationId !== process.env.ALEXA_APPID) {
