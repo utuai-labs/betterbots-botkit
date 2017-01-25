@@ -38,7 +38,7 @@ export const IDENTITY = {
   LOGIN: {
     intents: ['Login (.*)'],
     slots: {
-      EMAIL: text,
+      EMAIL: "string"",
     },
     utterances: [
       '{login} {-|EMAIL}',
