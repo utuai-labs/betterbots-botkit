@@ -138,6 +138,7 @@ alexaEars.hears(CLIPS.CLIP_CATEGORIES.intents, ['message_received'], function(bo
 });
 
 facebookEars.hears(IDENTITY.LOGIN.intents, ['message_received'], (bot, message) => {
+  console.log("blow me");
   console.log("message: ", message.match);
   const email = message.match[1];
   console.log("email: ", email);
@@ -153,6 +154,7 @@ facebookEars.hears(IDENTITY.LOGIN.intents, ['message_received'], (bot, message) 
     message.utu.event("Error - Login");
     bot.reply(message, "Sorry, I didn't catach an email.  Can you repeat it please?");
   }
+  console.log("blow me good");
 });
 
 alexaEars.hears(IDENTITY.LOGIN.intents, ['message_received'], function(bot, message) {
