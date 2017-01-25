@@ -1,6 +1,2 @@
-try {
-  require('dotenv').config();
-} catch(e) {
-  console.warn('No .env found, assuming ENV loaded manually');
-}
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 import './ai';
