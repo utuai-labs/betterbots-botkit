@@ -40,7 +40,7 @@
   },
   "scripts": {
     "build": "babel -w --presets es2015 src -d dist",
-    "start": "cross-env nodemon lesson-00/src/index.js --watch src --exec babel-node"
+    "start": "cross-env nodemon lesson-01/src/index.js --watch src --exec babel-node"
   },
   "license": "MIT"
 }
