@@ -56,6 +56,9 @@ facebookEars.middleware.receive.use((bot, message, next) => {
   next();
 });
 
+//creates a verifier for request header signatures
+const verifier = require('alexa-verifier')
+
 // creating a middleware that adds the utu context to each incoming request
 alexaEars.middleware.receive.use((bot, message, next) => {
   // instrament each message to have utu within the scope of each incoming message
