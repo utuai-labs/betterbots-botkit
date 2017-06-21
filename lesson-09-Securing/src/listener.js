@@ -17,6 +17,9 @@ const ears = alexa({
 // give alexa the tools to listen and communicate to the outside world
 const earBuds = ears.spawn({});
 
+//creates a verifier for request header signatures
+const verifier = require('alexa-verifier')
+
 // start listening to your Alexa ears!
 ears.setupWebserver(process.env.PORT, (err, webserver) => {
   ears.createWebhookEndpoints(webserver, earBuds, () => {
